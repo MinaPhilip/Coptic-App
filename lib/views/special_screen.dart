@@ -4,6 +4,7 @@ import 'package:elkeraza/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+// ignore: must_be_immutable
 class day_reading extends StatefulWidget {
   day_reading({super.key, required this.date});
   String date; // Changed from final to var to allow updating
@@ -22,7 +23,6 @@ class _day_readingState extends State<day_reading> {
   @override
   void initState() {
     super.initState();
-    // Initialize appBarTitle with the current Coptic date
     DateTime now = DateTime.now();
     CopticDate copticDate = gregorianToCoptic(now);
     appBarTitle = Date_without_weekday(copticDate);
@@ -42,6 +42,12 @@ class _day_readingState extends State<day_reading> {
                 context,
                 _selectedValue1!,
                 _selectedValue2!,
+                (double newFontSize, String newTextColor) {
+                  setState(() {
+                    _selectedValue1 = newFontSize;
+                    _selectedValue2 = newTextColor;
+                  });
+                },
               );
             },
             icon: const Icon(Icons.settings),

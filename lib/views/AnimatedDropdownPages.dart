@@ -1,3 +1,5 @@
+import 'package:elkeraza/Data/begin_prayer.dart';
+import 'package:elkeraza/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
@@ -19,6 +21,16 @@ class AnimatedDropdownPages extends StatefulWidget {
 }
 
 class AnimatedDropdownPagesState extends State<AnimatedDropdownPages> {
+  Future<List<dynamic>> _loadData() async {
+    List<dynamic> jsonData = [];
+    if (widget.json) {
+      jsonData = await _loadDatafromjson();
+      return [...beginPrayers, ...jsonData];
+    } else {
+      return _loadDatafromdart();
+    }
+  }
+
   Future<List<dynamic>> _loadDatafromjson() async {
     final String jsonString = await rootBundle.loadString(widget.path!);
     return json.decode(jsonString);
@@ -32,80 +44,6 @@ class AnimatedDropdownPagesState extends State<AnimatedDropdownPages> {
   double? _selectedValue1 = 24.00;
   String? _selectedValue2 = 'اسود';
 
-  void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            "الاعدادات",
-            style: const TextStyle(fontFamily: 'mainfont'),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Text(
-                'حجم الخط',
-                style: TextStyle(fontFamily: 'mainfont'),
-              ),
-              DropdownButton<double>(
-                value: _selectedValue1,
-                onChanged: (double? newValue) {
-                  setState(() {
-                    _selectedValue1 = newValue!;
-                  });
-                },
-                items: <double>[12, 24, 36, 48, 60]
-                    .map<DropdownMenuItem<double>>((double value) {
-                  return DropdownMenuItem<double>(
-                    value: value,
-                    child: Text(
-                      value.toString(),
-                      style: const TextStyle(fontFamily: 'mainfont'),
-                    ),
-                  );
-                }).toList(),
-              ),
-              const Text(
-                'لون الخط',
-                style: TextStyle(fontFamily: 'mainfont'),
-              ),
-              DropdownButton<String>(
-                value: _selectedValue2,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedValue2 = newValue!;
-                  });
-                },
-                items: <String>['اسود', 'ابيض']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: const TextStyle(fontFamily: 'mainfont'),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                "Close",
-                style: TextStyle(fontFamily: 'mainfont'),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,10 +56,20 @@ class AnimatedDropdownPagesState extends State<AnimatedDropdownPages> {
           actions: [
             IconButton(
                 icon: const Icon(Icons.settings),
-                onPressed: () => _showDialog()),
+                onPressed: () => showSettingsDialog(
+                      context,
+                      _selectedValue1!,
+                      _selectedValue2!,
+                      (double newFontSize, String newTextColor) {
+                        setState(() {
+                          _selectedValue1 = newFontSize;
+                          _selectedValue2 = newTextColor;
+                        });
+                      },
+                    )),
           ]),
       body: FutureBuilder<List<dynamic>>(
-        future: widget.json ? _loadDatafromjson() : _loadDatafromdart(),
+        future: _loadData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -184,8 +132,9 @@ class AnimatedDropdownPagesState extends State<AnimatedDropdownPages> {
                                       : pages[index]['name'],
                                   overflow: TextOverflow.visible,
                                   maxLines: 1,
-                                  style:
-                                      const TextStyle(fontFamily: 'mainfont',),
+                                  style: const TextStyle(
+                                    fontFamily: 'mainfont',
+                                  ),
                                 ),
                               ),
                             );
@@ -208,7 +157,8 @@ class AnimatedDropdownPagesState extends State<AnimatedDropdownPages> {
                                           : Colors.black,
                                       fontSize: _selectedValue1,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'mainfont',height: 2.0),
+                                      fontFamily: 'mainfont',
+                                      height: 2.0),
                                 ),
                               )
                             : Container();

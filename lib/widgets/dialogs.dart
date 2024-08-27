@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:elkeraza/Model/coptic_model.dart';
 
-void showSettingsDialog(
+Future<void> showSettingsDialog(
   BuildContext context,
   double selectedValue1,
   String selectedValue2,
-) {
-  showDialog(
+  Function(double, String) onSettingsChanged,
+) async {
+  await showDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
@@ -79,6 +80,8 @@ void showSettingsDialog(
               style: TextStyle(fontFamily: 'mainfont', color: Colors.black),
             ),
             onPressed: () {
+              // Pass the updated values back to the parent widget
+              onSettingsChanged(selectedValue1, selectedValue2);
               Navigator.of(context).pop();
             },
           ),
@@ -106,7 +109,11 @@ Future<CopticDate?> showCopticDatePickerDialog(
               children: [
                 DropdownButton<int>(
                   value: selectedDay,
-                  items: List.generate(30, (index) => index + 1)
+                  items: List.generate(
+                          selectedMonth == 13
+                              ? (selectedYear % 4 == 3 ? 6 : 5)
+                              : 30,
+                          (index) => index + 1)
                       .map((day) => DropdownMenuItem<int>(
                             value: day,
                             child: Text(day.toString()),
@@ -132,6 +139,7 @@ Future<CopticDate?> showCopticDatePickerDialog(
                     if (value != null) {
                       setState(() {
                         selectedMonth = value;
+                        selectedDay = 1; // Reset day when month changes
                       });
                     }
                   },
@@ -149,6 +157,10 @@ Future<CopticDate?> showCopticDatePickerDialog(
                     if (value != null) {
                       setState(() {
                         selectedYear = value;
+                        if (selectedMonth == 13) {
+                          selectedDay =
+                              1; // Reset day when year changes if month is نسئ
+                        }
                       });
                     }
                   },
@@ -174,7 +186,7 @@ Future<CopticDate?> showCopticDatePickerDialog(
                 monthName: copticMonths[selectedMonth - 1],
                 weekday: arabicWeekdays[DateTime.now().weekday % 7],
               );
-              Navigator.of(context).pop(newDate); // Return the selected date
+              Navigator.of(context).pop(newDate);
             },
             child: Text('OK'),
           ),

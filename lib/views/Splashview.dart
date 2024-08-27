@@ -52,10 +52,10 @@ class _SplashViewState extends State<SplashView> {
           ),
           Text('جميع البيانات مأخودة من موقع كنيسة الانبا تكلا',
               style: TextStyle(
-                  color: Colors.white, fontFamily: 'mainfont', fontSize: 9.sp)),
+                  color: Colors.black, fontFamily: 'mainfont', fontSize: 9.sp)),
           Text('Developed  By Mina Philip',
               style: TextStyle(
-                  color: Colors.white, fontFamily: 'mainfont', fontSize: 9.sp)),
+                  color: Colors.black, fontFamily: 'mainfont', fontSize: 9.sp)),
         ],
       ),
     );
