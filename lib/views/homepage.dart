@@ -1,11 +1,13 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elkeraza/Data/candle_prayer.dart';
 import 'package:elkeraza/Data/lqan_prayer.dart';
 import 'package:elkeraza/Data/oath_prayers.dart';
 import 'package:elkeraza/Data/prostration_prayer.dart';
 import 'package:elkeraza/Model/Category_model.dart';
-import 'package:elkeraza/views/AnimatedDropdownPages.dart';
-import 'package:elkeraza/views/options.dart';
-import 'package:elkeraza/views/special_screen.dart';
+import 'package:elkeraza/views/Splashview.dart';
+import 'package:elkeraza/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../Model/coptic_model.dart';
@@ -19,6 +21,30 @@ class homepage extends StatefulWidget {
 }
 
 class _homepageState extends State<homepage> {
+  final GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  Map<String, dynamic>? userData;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      DocumentSnapshot userDoc = await users.doc(finalEmail).get();
+      if (userDoc.exists) {
+        setState(() {
+          userData = userDoc.data() as Map<String, dynamic>?;
+        });
+      }
+    } catch (e) {
+      log('Error fetching user data: $e');
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -33,61 +59,85 @@ class _homepageState extends State<homepage> {
           image: 'assets/alagbia.png',
           title: 'الاجبية',
           subtitle: 'جميع صلوات الاجبيه حتي صلاة النوم',
-          widget_CategoryModel: const Options()),
+          widget_CategoryModel: '/options',
+          arugList: []),
       CategoryModel(
           image: 'assets/daily.jpg',
           title: 'القراءات اليومية',
           subtitle: 'القراءات الخاصه باليوم حسب التاريخ القبطي',
-          widget_CategoryModel: day_reading(
-            date: formatforreading(now, copticDate),
-          )),
+          widget_CategoryModel: '/day_reading',
+          arugList: [formatforreading(now, copticDate)]),
       CategoryModel(
-          title: 'صلاة القنديل',
-          image: 'assets/candle.jpg',
-          subtitle: 'تحتوي علي صلوات القنديل من الاولي الي السابعة',
-          widget_CategoryModel: AnimatedDropdownPages(
-            title: 'صلاة القنديل',
-            json: false,
-            file: candlePrayer,
-          )),
+        title: 'صلاة القنديل',
+        image: 'assets/candle.jpg',
+        subtitle: 'تحتوي علي صلوات القنديل من الاولي الي السابعة',
+        widget_CategoryModel: '/prayer',
+        arugList: [
+          'صلاة القنديل',
+          false,
+          '',
+          candlePrayer,
+        ],
+      ),
       CategoryModel(
           title: 'صلاة اللقان',
           image: 'assets/lqan.jpg',
           subtitle: 'ثلاث صلوات اللقان اللتي في السنة',
-          widget_CategoryModel: AnimatedDropdownPages(
-            title: 'صلاة اللقان',
-            json: false,
-            file: lqanPrayer,
-          )),
+          widget_CategoryModel: '/prayer',
+          arugList: [
+            'صلاة اللقان',
+            false,
+            '',
+            lqanPrayer,
+          ]),
       CategoryModel(
           title: 'صلاة السجده',
           image: 'assets/prostration.jpeg',
           subtitle: 'ثلاث صلوات السجده مع المقدمة ',
-          widget_CategoryModel: AnimatedDropdownPages(
-            title: 'صلاة سجده',
-            json: false,
-            file: prostrationPrayer,
-          )),
+          widget_CategoryModel: '/prayer',
+          arugList: [
+            'صلاة السجده',
+            false,
+            '',
+            prostrationPrayer,
+          ]),
       CategoryModel(
           title: 'صلوات القسم',
           image: 'assets/oath.jpg',
           subtitle: 'صلاة تصاحب تقسيم الجسد المقدس في القداس الإلهي ',
-          widget_CategoryModel: AnimatedDropdownPages(
-            title: 'صلوات القسم',
-            json: false,
-            file: oathPrayers,
-          ))
+          widget_CategoryModel: '/prayer',
+          arugList: [
+            'صلاة القسم',
+            false,
+            '',
+            oathPrayers,
+          ]),
     ];
     return Scaffold(
+        key: scaffoldkey,
+        drawer: (finalEmail == null || finalEmail!.isEmpty || userData == null)
+            ? null
+            : Custom_Drawer(
+                nameChurches: userData?['الكنيسه'] ?? '',
+                service: userData?['الخدمه'] ?? '',
+                nameUser: userData?['name'] ?? '',
+                id: userData?['id'] ?? '',
+              ),
         backgroundColor: const Color(0xFFDDB47E),
         appBar: AppBar(
+            leading:
+                (finalEmail == null || finalEmail!.isEmpty || userData == null)
+                    ? const SizedBox()
+                    : IconButton(
+                        onPressed: () {
+                          scaffoldkey.currentState!.openDrawer();
+                        },
+                        icon: const Icon(Icons.menu)),
             backgroundColor: const Color(0xFFDDB47E),
             elevation: 1,
-            automaticallyImplyLeading: false,
-            title: const Center(
-              child: Text('المنجلية',
-                  style: TextStyle(fontSize: 24, fontFamily: 'mainfont')),
-            )),
+            centerTitle: true,
+            title: const Text('المنجلية',
+                style: TextStyle(fontSize: 24, fontFamily: 'mainfont'))),
         body: Column(
           children: [
             Expanded(

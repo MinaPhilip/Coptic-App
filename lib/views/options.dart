@@ -27,43 +27,44 @@ class _OptionsState extends State<Options> {
         body: ListView(
           children: [
             const Box(
-              json: true,
               title: 'صلاة باكر',
+              json: true,
               path: 'assets/Data/elagbia/bakr.json',
             ),
             const Box(
-              json: true,
               title: 'صلاة الساعة الثالثة',
+              json: true,
               path: 'assets/Data/elagbia/elthaltha.json',
             ),
             const Box(
-              json: true,
               title: 'صلاة الساعة السادسة',
+              json: true,
               path: 'assets/Data/elagbia/elsadsa.json',
             ),
             const Box(
-              json: true,
               title: 'صلاة الساعة التاسعة',
+              json: true,
               path: 'assets/Data/elagbia/eltas3a.json',
             ),
             const Box(
-              json: true,
               title: 'صلاة الغروب',
+              json: true,
               path: 'assets/Data/elagbia/el8rob.json',
             ),
             const Box(
-              json: true,
               title: 'صلاة النوم',
+              json: true,
               path: 'assets/Data/elagbia/elnom.json',
             ),
             Box(
-              json: false,
               title: 'صلاة نصف الليل',
+              json: false,
+              path: '',
               file: midnightPrayer,
             ),
             const Box(
-              json: true,
               title: 'صلاة الستار',
+              json: true,
               path: 'assets/Data/elagbia/elsetar.json',
             ),
           ],

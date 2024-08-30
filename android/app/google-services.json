@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "849709741071",
+    "project_id": "coptic-app-c115f",
+    "storage_bucket": "coptic-app-c115f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849709741071:android:c9d3ab12a34c56f1771f7a",
+        "android_client_info": {
+          "package_name": "com.example.elkeraza"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBblW8phNUoGKeUYhbbp87H94d-Ux2I9nM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

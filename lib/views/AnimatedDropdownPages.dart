@@ -3,27 +3,21 @@ import 'package:elkeraza/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
 
 class AnimatedDropdownPages extends StatefulWidget {
-  const AnimatedDropdownPages(
-      {super.key,
-      this.path,
-      required this.title,
-      this.file,
-      required this.json});
-  final String? path;
-  final String title;
-  final List<dynamic>? file;
-  final bool json;
-
+  const AnimatedDropdownPages({
+    super.key,
+  });
   @override
   AnimatedDropdownPagesState createState() => AnimatedDropdownPagesState();
 }
 
 class AnimatedDropdownPagesState extends State<AnimatedDropdownPages> {
+  final List arguments = Get.arguments;
   Future<List<dynamic>> _loadData() async {
     List<dynamic> jsonData = [];
-    if (widget.json) {
+    if (arguments[1]) {
       jsonData = await _loadDatafromjson();
       return [...beginPrayers, ...jsonData];
     } else {
@@ -32,12 +26,12 @@ class AnimatedDropdownPagesState extends State<AnimatedDropdownPages> {
   }
 
   Future<List<dynamic>> _loadDatafromjson() async {
-    final String jsonString = await rootBundle.loadString(widget.path!);
+    final String jsonString = await rootBundle.loadString(arguments[2]!);
     return json.decode(jsonString);
   }
 
   Future<List<dynamic>> _loadDatafromdart() async {
-    return widget.file!;
+    return arguments[3]!;
   }
 
   final ValueNotifier<int?> _selectedPageIndex = ValueNotifier<int?>(0);
@@ -50,7 +44,7 @@ class AnimatedDropdownPagesState extends State<AnimatedDropdownPages> {
       appBar: AppBar(
           backgroundColor: const Color(0xFFDDB47E),
           title: Text(
-            widget.title,
+            arguments[0],
             style: const TextStyle(fontFamily: 'mainfont'),
           ),
           actions: [

@@ -1,18 +1,18 @@
 import 'package:elkeraza/Model/Category_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class CategoryItems extends StatelessWidget {
-  const CategoryItems({super.key,required this.Categories});
+  const CategoryItems({super.key, required this.Categories});
   final CategoryModel Categories;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Categories.widget_CategoryModel;
-        }));
+        Get.toNamed(Categories.widget_CategoryModel,
+            arguments: Categories.arugList);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,

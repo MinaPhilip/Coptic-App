@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../views/AnimatedDropdownPages.dart';
+import 'package:get/get.dart';
 
 class Box extends StatefulWidget {
   const Box(
@@ -23,14 +22,8 @@ class _BoxState extends State<Box> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return AnimatedDropdownPages(
-            json: widget.json,
-            path: widget.path,
-            title: widget.title,
-            file: widget.file,
-          );
-        }));
+        Get.toNamed('/prayer',
+            arguments: [widget.title, widget.json, widget.path, widget.file]);
       },
       child: Container(
         margin: const EdgeInsets.all(15),

@@ -101,7 +101,7 @@ Future<CopticDate?> showCopticDatePickerDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Select Coptic Date'),
+        title: const Text('اختار التاريخ القبطي'),
         content: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Column(
@@ -175,7 +175,7 @@ Future<CopticDate?> showCopticDatePickerDialog(
               Navigator.of(context)
                   .pop(); // Close the dialog without returning a date
             },
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -188,7 +188,7 @@ Future<CopticDate?> showCopticDatePickerDialog(
               );
               Navigator.of(context).pop(newDate);
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       );

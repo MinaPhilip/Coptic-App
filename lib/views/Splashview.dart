@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
-import 'HomePage.dart';
+
+String? finalEmail;
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -10,16 +15,28 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  void gettohomepage() {
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => homepage()));
+  navigateToHome() async {
+    await Future.delayed(const Duration(seconds: 5), () {
+      Get.offNamed(
+        finalEmail == null || finalEmail == '' ? '/login' : '/home',
+      );
     });
   }
 
+  Future getvaildationData() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obtainedEmail = sharedPreferences.getString('email');
+    setState(() {
+      finalEmail = obtainedEmail;
+    });
+    log('Email: $finalEmail');
+  }
+
+  @override
   void initState() {
+    getvaildationData().whenComplete(() => navigateToHome());
     super.initState();
-    gettohomepage();
   }
 
   @override

@@ -2,12 +2,12 @@ import 'package:elkeraza/Data/data_daily.dart';
 import 'package:elkeraza/Model/coptic_model.dart';
 import 'package:elkeraza/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 // ignore: must_be_immutable
 class day_reading extends StatefulWidget {
-  day_reading({super.key, required this.date});
-  String date; // Changed from final to var to allow updating
+  const day_reading({super.key});
 
   @override
   State<day_reading> createState() => _day_readingState();
@@ -16,7 +16,7 @@ class day_reading extends StatefulWidget {
 class _day_readingState extends State<day_reading> {
   double? _selectedValue1 = 24.00;
   String? _selectedValue2 = 'اسود';
-
+  List<dynamic> arugment = Get.arguments;
   // Variable to hold the AppBar title
   late String appBarTitle;
 
@@ -30,7 +30,7 @@ class _day_readingState extends State<day_reading> {
 
   @override
   Widget build(BuildContext context) {
-    String datewithnospece = widget.date.replaceAll(' ', '');
+    String datewithnospece = arugment[0].replaceAll(' ', '');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFDDB47E),
@@ -62,7 +62,7 @@ class _day_readingState extends State<day_reading> {
               if (newDate != null) {
                 setState(() {
                   // Update the date and title, then trigger UI update
-                  widget.date = formatforreading(DateTime.now(), newDate);
+                  arugment[0] = formatforreading(DateTime.now(), newDate);
                   appBarTitle = Date_without_weekday(newDate);
                 });
               }
