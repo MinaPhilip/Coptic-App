@@ -32,8 +32,6 @@ class _CustomListviewItemsState extends State<CustomListviewItems> {
           Get.toNamed('/Chat', arguments: widget.drawerModel.arugList);
         } else if (widget.drawerModel.pagenavigator == '/notification_topic') {
           Get.toNamed('/notification_topic');
-        } else {
-          Get.toNamed('/notification_token');
         }
       },
       leading: Icon(

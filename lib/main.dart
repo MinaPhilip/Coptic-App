@@ -1,6 +1,4 @@
 import 'package:elkeraza/service/push_notifications.dart';
-import 'package:elkeraza/views/Notifications/notification_token_view.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,7 +19,7 @@ import 'views/Splashview/Splashview.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  Future.wait([
+  await Future.wait([
     PushNotificationsService.init(),
     LocalNotificationService.init(),
   ]);
@@ -72,10 +70,6 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: '/notification_topic',
               page: () => NotificationTopicView(),
-              transition: Transition.fadeIn),
-          GetPage(
-              name: '/notification_token',
-              page: () => NotificationTokenView(),
               transition: Transition.fadeIn),
         ],
         initialRoute: '/',

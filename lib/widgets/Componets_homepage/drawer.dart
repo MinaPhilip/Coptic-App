@@ -66,12 +66,6 @@ class _Custom_DrawerState extends State<Custom_Drawer> {
           arugList: [],
         ),
         const DrawerModel(
-          title: 'ارسال اشعار لمخدوم',
-          iconData: Icons.notification_add,
-          pagenavigator: '/notification_token',
-          arugList: [],
-        ),
-        const DrawerModel(
           title: 'تسجيل الخروج',
           iconData: Icons.logout,
           pagenavigator: '/login',

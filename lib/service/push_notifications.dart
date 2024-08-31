@@ -20,7 +20,7 @@ class PushNotificationsService {
     FirebaseMessaging.onBackgroundMessage(handlebackgroundMessage);
     //foreground
     handleForegroundMessage();
-    messaging.subscribeToTopic('all').then((val) {
+    await messaging.subscribeToTopic('all').then((val) {
       log('sub');
     });
 

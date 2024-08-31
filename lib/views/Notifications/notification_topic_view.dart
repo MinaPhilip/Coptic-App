@@ -93,8 +93,11 @@ class _NotificationTopicViewState extends State<NotificationTopicView> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
-                TopicManager.sendNotificationToTopic(await _getSavedTopic(),
-                    _titleController.text, _bodyController.text);
+                TopicManager.sendNotificationToTopic(
+                    context,
+                    await _getSavedTopic(),
+                    _titleController.text,
+                    _bodyController.text);
               },
               child: const Text('ارسل الاشعار',
                   style: TextStyle(
