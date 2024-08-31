@@ -25,12 +25,6 @@
 ![Login and signup Screens (1)](https://github.com/user-attachments/assets/3d5806d6-8955-4bf9-90e2-3e7b366c4d2a)
 ![Login and signup Screens (3)](https://github.com/user-attachments/assets/bb2b03e7-0b67-4130-a94f-28aedd986a24)
 
-## 🎥 Video
-
-
-https://github.com/user-attachments/assets/39581061-0b8c-433e-8ca8-12b0a8b9ebab
-
-
 
 ## 🛠 Dependencies
 
