@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:elkeraza/Data/churches_data.dart';
 import 'package:elkeraza/helper/awesome_snackbar.dart';
-import 'package:elkeraza/widgets/Textfiled.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:uuid/uuid.dart';
 
-import '../widgets/Signinbutton.dart';
+import '../../widgets/Componets_loginandsign/Signinbutton.dart';
+import '../../widgets/Componets_loginandsign/Textfiled.dart';
 
 final TextEditingController _passwordTextController = TextEditingController();
 final TextEditingController _emailTextController = TextEditingController();
@@ -21,24 +20,45 @@ class SignUpScreen extends StatefulWidget {
 }
 
 CollectionReference users = FirebaseFirestore.instance.collection('users');
-// Single Form Key
-
+Map<String, List<String>> categoryItems = {};
+final List<String> roles = ['خادم', 'مخدوم'];
+String? selectedRole;
 String? selectedItem;
 String? selectedCategory;
+
 Future<bool> checkIfDocExists(String docId) async {
   try {
-    // Reference to the document
     DocumentSnapshot doc =
         await FirebaseFirestore.instance.collection('users').doc(docId).get();
-
-    // Check if the document exists
     return doc.exists;
   } catch (e) {
     return false;
   }
 }
 
+Future<void> fetchCategoryItems() async {
+  try {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('categories').get();
+    for (var doc in querySnapshot.docs) {
+      String category = doc.id;
+      List<String> items = List<String>.from(doc['items']);
+      categoryItems[category] = items;
+    }
+  } catch (e) {
+    print('Error fetching category items: $e');
+  }
+}
+
 class _SignUpScreenState extends State<SignUpScreen> {
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      fetchCategoryItems(); // Fetch categories when the screen is initialized
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +107,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 20,
                 ),
                 DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(labelText: 'اختار كنيستك'),
+                  decoration: const InputDecoration(
+                      labelText: 'اختار كنيستك',
+                      labelStyle: TextStyle(fontFamily: 'mainfont')),
                   value: selectedCategory,
                   onChanged: (String? newValue) {
                     setState(() {
@@ -97,21 +119,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   validator: (value) {
                     if (value == null) {
-                      return 'Please select a category';
+                      showFailureSnackbar(context, 'خطأ', 'يجب ملئ البيانات');
                     }
                     return null;
                   },
                   items: categoryItems.keys.map((String category) {
                     return DropdownMenuItem<String>(
                       value: category,
-                      child: Text(category),
+                      child: Text(
+                        category,
+                        style: const TextStyle(fontFamily: 'mainfont'),
+                      ),
                     );
                   }).toList(),
                 ),
                 const SizedBox(height: 20),
                 if (selectedCategory != null)
                   DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(labelText: 'اختار خدمتك'),
+                    decoration: const InputDecoration(
+                        labelText: 'اختار خدمتك',
+                        labelStyle: TextStyle(fontFamily: 'mainfont')),
                     value: selectedItem,
                     onChanged: (String? newValue) {
                       setState(() {
@@ -127,7 +154,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     items: categoryItems[selectedCategory!]!.map((String item) {
                       return DropdownMenuItem<String>(
                         value: item,
-                        child: Text(item),
+                        child: Text(
+                          item,
+                          style: const TextStyle(fontFamily: 'mainfont'),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                const SizedBox(height: 20),
+                if (selectedItem != null)
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(
+                        labelText: 'خادم ام مخدوم ',
+                        labelStyle: TextStyle(fontFamily: 'mainfont')),
+                    value: selectedRole,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedRole = newValue;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select a role';
+                      }
+                      return null;
+                    },
+                    items: roles.map((String role) {
+                      return DropdownMenuItem<String>(
+                        value: role,
+                        child: Text(
+                          role,
+                          style: const TextStyle(fontFamily: 'mainfont'),
+                        ),
                       );
                     }).toList(),
                   ),
@@ -169,7 +227,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     );
                   } else if (_emailTextController.text.isNotEmpty &&
                       _passwordTextController.text.isNotEmpty &&
-                      _userNameTextController.text.isNotEmpty) {
+                      _userNameTextController.text.isNotEmpty &&
+                      selectedCategory != null &&
+                      selectedItem != null) {
                     var uuid = const Uuid();
                     users.doc(_emailTextController.text).set({
                       'name': _userNameTextController.text,
@@ -178,6 +238,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       'الكنيسه': selectedCategory!,
                       'الخدمه': selectedItem!,
                       'id': uuid.v4(),
+                      'role': selectedRole!,
                     }).then((value) {
                       setState(() {
                         selectedCategory = null;
@@ -202,6 +263,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       );
                     });
+                  } else {
+                    showFailureSnackbar(
+                      context,
+                      'البيانات غير مكتمله',
+                      'يجب ملئ جميع البيانات واختيار كنيستك وخدمتك',
+                    );
                   }
                 }, 'انشاء حساب'),
               ],

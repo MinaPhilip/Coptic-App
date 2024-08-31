@@ -1,6 +1,6 @@
-import 'package:elkeraza/Data/midnight_prayer.dart';
-import 'package:elkeraza/widgets/Box.dart';
 import 'package:flutter/material.dart';
+import '../../Data/prayers/midnight_prayer.dart';
+import '../../widgets/Componets_reading/box.dart';
 
 class Options extends StatefulWidget {
   const Options({super.key});

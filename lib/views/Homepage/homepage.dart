@@ -1,17 +1,19 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:elkeraza/Data/candle_prayer.dart';
-import 'package:elkeraza/Data/lqan_prayer.dart';
-import 'package:elkeraza/Data/oath_prayers.dart';
-import 'package:elkeraza/Data/prostration_prayer.dart';
+
 import 'package:elkeraza/Model/Category_model.dart';
-import 'package:elkeraza/views/Splashview.dart';
-import 'package:elkeraza/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../Model/coptic_model.dart';
-import '../widgets/Category_items.dart';
+
+import '../../Data/prayers/candle_prayer.dart';
+import '../../Data/prayers/lqan_prayer.dart';
+import '../../Data/prayers/oath_prayers.dart';
+import '../../Data/prayers/prostration_prayer.dart';
+import '../../Model/coptic_model.dart';
+import '../../widgets/Componets_homepage/Category_items.dart';
+import '../../widgets/Componets_homepage/drawer.dart';
+import '../Splashview/Splashview.dart';
 
 class homepage extends StatefulWidget {
   homepage({super.key});
@@ -29,6 +31,7 @@ class _homepageState extends State<homepage> {
   @override
   void initState() {
     super.initState();
+    log(finalEmail.toString());
     _fetchUserData();
   }
 
@@ -122,6 +125,7 @@ class _homepageState extends State<homepage> {
                 service: userData?['الخدمه'] ?? '',
                 nameUser: userData?['name'] ?? '',
                 id: userData?['id'] ?? '',
+                status: userData?['role'] ?? '',
               ),
         backgroundColor: const Color(0xFFDDB47E),
         appBar: AppBar(

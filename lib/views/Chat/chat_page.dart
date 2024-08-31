@@ -2,8 +2,9 @@ import 'package:elkeraza/service/local_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import '../Model/message_model.dart';
-import '../widgets/chat_buble.dart';
+
+import '../../Model/message_model.dart';
+import '../../widgets/Componets_chat/chat_buble.dart';
 
 class ChatPage extends StatefulWidget {
   ChatPage({super.key});

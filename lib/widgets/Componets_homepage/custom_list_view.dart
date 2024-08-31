@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
-import '../Model/drawer_model.dart';
+import '../../Model/drawer_model.dart';
+import '../../views/Splashview/Splashview.dart';
 
 class CustomListviewItems extends StatefulWidget {
   const CustomListviewItems({super.key, required this.drawerModel});
@@ -23,11 +24,14 @@ class _CustomListviewItemsState extends State<CustomListviewItems> {
           TopicManager.unsubscribeFromAllTopics();
           SharedPreferences sharedPreferences =
               await SharedPreferences.getInstance();
-          sharedPreferences.clear().then((value) {
+          await sharedPreferences.clear().then((value) {
+            finalEmail = null;
             Get.offNamed('/login');
           });
-        } else {
+        } else if (widget.drawerModel.pagenavigator == '/Chat') {
           Get.toNamed('/Chat', arguments: widget.drawerModel.arugList);
+        } else {
+          Get.toNamed('/notification');
         }
       },
       leading: Icon(

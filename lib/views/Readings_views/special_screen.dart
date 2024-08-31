@@ -1,9 +1,10 @@
-import 'package:elkeraza/Data/data_daily.dart';
 import 'package:elkeraza/Model/coptic_model.dart';
-import 'package:elkeraza/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../Data/prayers/data_daily.dart';
+import '../../widgets/Componets_reading/dialogs.dart';
 
 // ignore: must_be_immutable
 class day_reading extends StatefulWidget {

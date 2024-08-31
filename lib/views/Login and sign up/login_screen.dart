@@ -1,21 +1,21 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elkeraza/helper/awesome_snackbar.dart';
-
 import 'package:elkeraza/service/push_notifications.dart';
 import 'package:elkeraza/service/topic_maneger.dart';
-import 'package:elkeraza/views/Splashview.dart';
-import 'package:elkeraza/widgets/Signinbutton.dart';
-import 'package:elkeraza/widgets/Textfiled.dart';
+import 'package:elkeraza/widgets/Componets_loginandsign/Textfiled.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../widgets/Componets_loginandsign/Signinbutton.dart';
+import '../Splashview/Splashview.dart';
+
 GlobalKey<ScaffoldState> snackkey = GlobalKey<ScaffoldState>();
 final TextEditingController passwordTextController = TextEditingController();
 final TextEditingController emailTextController = TextEditingController();
+// ignore: non_constant_identifier_names
 
 class LoginBody extends StatefulWidget {
   LoginBody({Key? key}) : super(key: key);
@@ -78,12 +78,7 @@ class LoginBodyState extends State<LoginBody> {
                 custom_button(
                   context,
                   () async {
-                    final SharedPreferences sharedPreferences =
-                        await SharedPreferences.getInstance();
-                    sharedPreferences.setString(
-                        'email', emailTextController.text);
-                    finalEmail = emailTextController.text;
-                    await signIn(context).then((value) {});
+                    await signIn(context);
                   },
                   'تسجيل الدخول',
                 ),
@@ -153,10 +148,20 @@ signIn(BuildContext context) async {
         log('${user['الكنيسه']}_${user['الخدمه']}');
         log('${user['الكنيسه']}');
         log(TopicManager.convertToTopicName("${user['الكنيسه']}"));
+
         log(TopicManager.convertToTopicName(
             "${user['الكنيسه']}_${user['الخدمه']}"));
+        final SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setString('email', emailTextController.text);
+        finalEmail = emailTextController.text;
         passwordTextController.clear();
         emailTextController.clear();
+        sharedPreferences.setString(
+            'topic',
+            TopicManager.convertToTopicName(
+                "${user['الكنيسه']}_${user['الخدمه']}"));
+        log(user['role']);
         showSuccessSnackbar(
             context, 'تم تسجيل الدخول', 'تم تسجيل الدخول بنجاح');
         Get.offNamed('/home');

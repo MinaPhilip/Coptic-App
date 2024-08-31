@@ -1,11 +1,5 @@
 import 'package:elkeraza/service/push_notifications.dart';
-import 'package:elkeraza/views/AnimatedDropdownPages.dart';
-import 'package:elkeraza/views/chat_page.dart';
-import 'package:elkeraza/views/homepage.dart';
-import 'package:elkeraza/views/login_screen.dart';
-import 'package:elkeraza/views/options.dart';
-import 'package:elkeraza/views/signup.dart';
-import 'package:elkeraza/views/special_screen.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,7 +7,15 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'firebase_options.dart';
 import 'service/local_notifications.dart';
-import 'views/Splashview.dart';
+import 'views/Chat/chat_page.dart';
+import 'views/Homepage/homepage.dart';
+import 'views/Login and sign up/login_screen.dart';
+import 'views/Login and sign up/signup.dart';
+import 'views/Notifications/notification_view.dart';
+import 'views/Readings_views/AnimatedDropdownPages.dart';
+import 'views/Readings_views/options.dart';
+import 'views/Readings_views/special_screen.dart';
+import 'views/Splashview/Splashview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +50,7 @@ class MyApp extends StatelessWidget {
               transition: Transition.fadeIn),
           GetPage(
               name: '/signup',
-              page: () => SignUpScreen(),
+              page: () => const SignUpScreen(),
               transition: Transition.fadeIn),
           GetPage(
               name: '/prayer',
@@ -65,6 +67,10 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: '/Chat',
               page: () => ChatPage(),
+              transition: Transition.fadeIn),
+          GetPage(
+              name: '/notification',
+              page: () => NotificationView(),
               transition: Transition.fadeIn),
         ],
         initialRoute: '/',

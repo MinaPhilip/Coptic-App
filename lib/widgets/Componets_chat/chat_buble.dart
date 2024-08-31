@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../Model/message_model.dart';
+import '../../Model/message_model.dart';
 
 class ChatBuble extends StatelessWidget {
   const ChatBuble({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   final Message message;
   @override
@@ -58,9 +58,9 @@ class ChatBuble extends StatelessWidget {
 
 class ChatBubleForFriend extends StatelessWidget {
   const ChatBubleForFriend({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   final Message message;
   @override
@@ -73,7 +73,7 @@ class ChatBubleForFriend extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20),
             child: Text(
               message.name!,
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'mainfont',
                   fontWeight: FontWeight.bold,
                   color: Color.fromARGB(164, 0, 0, 0),

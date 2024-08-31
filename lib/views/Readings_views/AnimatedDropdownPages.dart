@@ -1,9 +1,10 @@
-import 'package:elkeraza/Data/begin_prayer.dart';
-import 'package:elkeraza/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
+
+import '../../Data/prayers/begin_prayer.dart';
+import '../../widgets/Componets_reading/dialogs.dart';
 
 class AnimatedDropdownPages extends StatefulWidget {
   const AnimatedDropdownPages({
