@@ -12,6 +12,7 @@
 - **Login Screen and signup Screen** .
 - **Home Screen:**.
 - **Readings Screen**.
+- **Notifications Screens**.
 
 
 ## 📁 File Structure
