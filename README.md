@@ -1,16 +1,75 @@
-# elkeraza
+# 📕  Coptic App
 
-A new Flutter project.
+## 🚀 Getting Started
 
-## Getting Started
+- The program contains all the daily readings that are said throughout the day and all the secondary and obligatory readings.
+- The program was formed using  `flutter_local_notifications`  `Push_notification with firebase` and `Cloud FireStore`.
+- The program contains a full chat to communicate with the church easily..
 
-This project is a starting point for a Flutter application.
+## 🤳 Screens
 
-A few resources to get you started if this is your first Flutter project:
+- **Splash Screen:** . 
+- **Login Screen and signup Screen** .
+- **Home Screen:**.
+- **Readings Screen**.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📁 File Structure
+
+![Screenshot 2024-08-30 122645](https://github.com/user-attachments/assets/7e871ac2-dc48-4303-8d56-0b235a76468b)
+
+## 📱 UI
+
+![Login and signup Screens](https://github.com/user-attachments/assets/74c154e8-545b-483e-9754-4ca86db210f8)
+
+![Login and signup Screens (1)](https://github.com/user-attachments/assets/3d5806d6-8955-4bf9-90e2-3e7b366c4d2a)
+![Login and signup Screens (3)](https://github.com/user-attachments/assets/bb2b03e7-0b67-4130-a94f-28aedd986a24)
+
+## 🎥 Video
+
+
+https://github.com/user-attachments/assets/39581061-0b8c-433e-8ca8-12b0a8b9ebab
+
+
+
+## 🛠 Dependencies
+
+```pubspec.yaml
+  awesome_snackbar_content: 
+  cloud_firestore: 
+  cupertino_icons: 
+  firebase_core: 
+  firebase_messaging:
+  flutter_launcher_icons: 
+  flutter_local_notifications: 
+  flutter_localization:
+  get: 
+  http:
+  intl: 
+  shared_preferences:
+  sizer:
+  uuid: 
+```
+
+## ☢️ Usage
+
+1. **Clone the repository**
+
+2. **Open the project in your preferred Flutter IDE.**
+
+3. **Explore the `lib` directory:**
+
+    - Review the project structure to understand the core of the app.
+    - Customize the app of your need.
+
+4. **Run the app on an emulator or physical device:**
+
+    ```bash
+    flutter run
+    ```
+
+## 🚨 Contributing
+
+- Contributions are welcome 💜
+- If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
