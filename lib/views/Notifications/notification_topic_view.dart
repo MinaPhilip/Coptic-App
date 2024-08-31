@@ -2,12 +2,12 @@ import 'package:elkeraza/service/topic_maneger.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NotificationView extends StatefulWidget {
+class NotificationTopicView extends StatefulWidget {
   @override
-  _NotificationViewState createState() => _NotificationViewState();
+  _NotificationTopicViewState createState() => _NotificationTopicViewState();
 }
 
-class _NotificationViewState extends State<NotificationView> {
+class _NotificationTopicViewState extends State<NotificationTopicView> {
   final _titleController = TextEditingController();
   final _bodyController = TextEditingController();
   String? _errorMessage;

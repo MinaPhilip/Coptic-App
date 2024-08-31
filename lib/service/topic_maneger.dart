@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:elkeraza/helper/awesome_snackbar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:googleapis_auth/auth.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
@@ -145,6 +147,56 @@ class TopicManager {
       print('Notification sent successfully');
     } else {
       print('Failed to send notification: ${response.body}');
+    }
+  }
+
+  static Future<void> sendNotificationToToken(
+    BuildContext context, // Add context to show the SnackBar
+    String? token,
+    String title,
+    String body,
+  ) async {
+    final url =
+        'https://fcm.googleapis.com/v1/projects/coptic-app-c115f/messages:send';
+
+    try {
+      final accessToken = await getAccessToken(); // Obtain the access token
+
+      final Map<String, dynamic> message = {
+        "message": {
+          "token": token,
+          "notification": {"title": title, "body": body},
+          "android": {
+            "notification": {
+              "sound": "long_notification_sound",
+              "channel_id":
+                  "channel_id", // NOTIFICATION CHANNEL ID WITH CUSTOM SOUND REFERENCE HERE
+            }
+          }
+        }
+      };
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+        body: jsonEncode(message),
+      );
+
+      if (response.statusCode == 200) {
+        print('Notification sent successfully');
+        showSuccessSnackbar(context, 'نجح', 'تم الارسال بنجاح');
+      } else {
+        print('Failed to send notification: ${response.body}');
+        // Show Snackbar for failure
+        showFailureSnackbar(context, 'خطا', 'الtoken غير صحيح');
+      }
+    } catch (e) {
+      print('Error sending notification: $e');
+      // Show Snackbar for error
+      showFailureSnackbar(context, 'خطا', 'حدث خطأ ما');
     }
   }
 }

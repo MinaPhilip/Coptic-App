@@ -30,8 +30,10 @@ class _CustomListviewItemsState extends State<CustomListviewItems> {
           });
         } else if (widget.drawerModel.pagenavigator == '/Chat') {
           Get.toNamed('/Chat', arguments: widget.drawerModel.arugList);
+        } else if (widget.drawerModel.pagenavigator == '/notification_topic') {
+          Get.toNamed('/notification_topic');
         } else {
-          Get.toNamed('/notification');
+          Get.toNamed('/notification_token');
         }
       },
       leading: Icon(

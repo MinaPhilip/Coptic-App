@@ -60,9 +60,15 @@ class _Custom_DrawerState extends State<Custom_Drawer> {
               widget.status
             ]),
         const DrawerModel(
-          title: 'ارسال اشعار',
+          title: ' ارسال اشعار للمخدومين',
           iconData: Icons.notifications,
-          pagenavigator: '/notification',
+          pagenavigator: '/notification_topic',
+          arugList: [],
+        ),
+        const DrawerModel(
+          title: 'ارسال اشعار لمخدوم',
+          iconData: Icons.notification_add,
+          pagenavigator: '/notification_token',
           arugList: [],
         ),
         const DrawerModel(

@@ -1,4 +1,5 @@
 import 'package:elkeraza/service/push_notifications.dart';
+import 'package:elkeraza/views/Notifications/notification_token_view.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import 'views/Chat/chat_page.dart';
 import 'views/Homepage/homepage.dart';
 import 'views/Login and sign up/login_screen.dart';
 import 'views/Login and sign up/signup.dart';
-import 'views/Notifications/notification_view.dart';
+import 'views/Notifications/notification_topic_view.dart';
 import 'views/Readings_views/AnimatedDropdownPages.dart';
 import 'views/Readings_views/options.dart';
 import 'views/Readings_views/special_screen.dart';
@@ -69,8 +70,12 @@ class MyApp extends StatelessWidget {
               page: () => ChatPage(),
               transition: Transition.fadeIn),
           GetPage(
-              name: '/notification',
-              page: () => NotificationView(),
+              name: '/notification_topic',
+              page: () => NotificationTopicView(),
+              transition: Transition.fadeIn),
+          GetPage(
+              name: '/notification_token',
+              page: () => NotificationTokenView(),
               transition: Transition.fadeIn),
         ],
         initialRoute: '/',
